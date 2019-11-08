@@ -16,7 +16,7 @@ const StyledSection = styled.section`
 `;
 
 const InnerSection = styled.div`
-  width: ${({ theme: { screens: { desktop } } }) => desktop};
+  max-width: ${({ theme: { screens: { desktop } } }) => desktop};
   margin: auto;
 `;
 
