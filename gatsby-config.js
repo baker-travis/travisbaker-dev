@@ -6,5 +6,8 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: ['gatsby-plugin-react-helmet', 'gatsby-plugin-styled-components'],
+  siteMetadata: {
+    siteUrl: `https://travisbaker.dev`,
+  },
+  plugins: ['gatsby-plugin-react-helmet', 'gatsby-plugin-styled-components', 'gatsby-plugin-sitemap'],
 };
