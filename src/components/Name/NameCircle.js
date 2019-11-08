@@ -4,7 +4,7 @@ import Circle from './Circle';
 import { useNameSize } from './NameContext';
 
 const AnimatedCircle = styled(Circle)`
-  transition: bottom 800ms, left 800ms;
+  transition: top 800ms, left 800ms;
 `;
 
 // width is 153 x 29
@@ -20,7 +20,7 @@ export default function NameCircle({
   useEffect(() => {
     const timeout = window.setTimeout(() => {
       setLeft(styleLeft * scale);
-      setBottom(styleBottom * scale);
+      setBottom(Math.abs(styleBottom - 24) * scale);
     }, 1500);
 
     return () => window.clearTimeout(timeout);
@@ -30,7 +30,7 @@ export default function NameCircle({
     <AnimatedCircle
       className="animatedName"
       width={scale * 3}
-      style={{ left, bottom, position: 'absolute' }}
+      style={{ left, top: bottom, position: 'absolute' }}
       fill="#d6deeb"
     />
   );
