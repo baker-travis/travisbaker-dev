@@ -22,7 +22,15 @@ export default function Layout({children}) {
   return (
     <>
       <Helmet>
-        <title>Travis</title>
+        <title>Travis Baker | Software Engineer</title>
+        <meta name="description" content="Travis Baker's personal website/portfolio. Travis is a full-stack software engineer that specializes in building complex frontend experiences." />
+        <meta name="keywords" content="Travis, Baker, Travis Baker, Javascript, React, HTML, CSS, Plano, Texas, Dallas, Frisco, software, engineer, developer, frontend, front-end, front, end" />
+        <meta property="og:title" content="Travis Baker's Portfolio" />
+        <meta property="og:title" content="Rich Link Preview" />
+        <meta property="og:description" content="Travis Baker's personal website and portfolio." />
+        <meta property="og:url" content="https://travisbaker.dev" />
+        <meta property="og:image" content="https://travisbaker.dev/preview.png" />
+        <link rel="shortcut icon" href="https://travisbaker.dev/favicon.ico" type="image/x-icon" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/fira_code.css"
