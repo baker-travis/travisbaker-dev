@@ -28,10 +28,18 @@ const Header = styled.h1`
   padding-top: 30px;
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 120px;
+  font-size: 80px;
   font-weight: 500;
   text-align: center;
   color: #d6deeb;
+
+  @media only screen and (min-width: 720px) {
+    font-size: 100px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    font-size: 120px;
+  }
 `;
 
 export default function Name() {
