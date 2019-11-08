@@ -21,7 +21,7 @@ export default function NameCircle({
     const timeout = window.setTimeout(() => {
       setLeft(styleLeft * scale);
       setBottom(Math.abs(styleBottom - 24) * scale);
-    }, 1500);
+    }, 750);
 
     return () => window.clearTimeout(timeout);
   }, [styleLeft, styleBottom, scale]);
