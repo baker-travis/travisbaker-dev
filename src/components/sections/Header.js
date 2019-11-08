@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Name from './Name';
+import Name from '../Name';
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   height: 100vh;
-  background-color: #011627;
-  padding: 30px;
+  padding: ${({ theme: { spacing: { xl } } }) => xl};
   position: relative;
 `;
 

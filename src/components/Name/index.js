@@ -21,24 +21,23 @@ const Container = styled.div`
   width: 100%;
   max-width: 1024px;
   margin: auto;
-  margin-top: 30px;
+  margin-top: ${({ theme: { spacing: { xl } } }) => xl};
   position: relative;
 `;
 
 const Header = styled.h1`
-  padding-top: 30px;
+  padding-top: ${({ theme: { spacing: { xl } } }) => xl};
   margin-top: 0;
   margin-bottom: 0;
   font-size: 80px;
   font-weight: 500;
   text-align: center;
-  color: #d6deeb;
 
-  @media only screen and (min-width: 720px) {
+  @media only screen and (min-width: ${({ theme: { screens: { tablet } } }) => tablet}) {
     font-size: 100px;
   }
 
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: ${({ theme: { screens: { desktop } } }) => desktop}) {
     font-size: 120px;
   }
 `;
@@ -48,7 +47,7 @@ export default function Name() {
   const rect = useRect(ref);
   return (
     <FlexContainer>
-      <Header><code>Hello, I'm</code></Header>
+      <Header><code>Hello, I'm</code> <span className="sr-only">Travis</span></Header>
       <Container ref={ref}>
         {rect && (
           <NameProvider rect={rect}>
