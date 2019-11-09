@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: ${({ theme: { background } }) => background};
+    scroll-behavior: smooth;
   }
 
   * {

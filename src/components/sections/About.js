@@ -4,9 +4,9 @@ import Section from './Section';
 export default function About() {
   return (
     <Section>
-      <h2>About Me</h2>
+      <h2 id="about-me">About Me</h2>
       <p>
-        My name is Travis Baker, software engineer by day and lover of all
+        I'm Travis Baker: software engineer by day and lover of all
         things tech by night. I grew up town-hopping between Oklahoma and Texas
         every few years, with a 3 year stint in Dubai, UAE. After about a year
         of college, I served a 2 year mission for{' '}
