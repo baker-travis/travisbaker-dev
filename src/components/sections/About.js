@@ -18,7 +18,7 @@ export default function About() {
         Engineering.
       </p>
       <p>
-        After living in the Dallas, Texas area for 4 years, I moved to rural Idaho where I now live with my wife and 2 (soon to be 3) kids. I love to watch and play sports. My favorite teams are the Houston Astros, Dallas Cowboys, and Dallas Mavericks. I also love watching all college football and basketball.
+        After living in the Dallas, Texas area for 4 years, I moved to rural Idaho where I now live with my wife and 3 kids. I love to watch and play sports. My favorite teams are the Houston Astros, Dallas Cowboys, and Dallas Mavericks. I also love watching all college football and basketball.
       </p>
     </Section>
   );
