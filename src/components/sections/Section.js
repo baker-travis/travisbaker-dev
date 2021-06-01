@@ -5,6 +5,8 @@ const StyledSection = styled.section`
   padding: ${({ theme: { spacing: { xl } } }) => xl};
   margin: auto;
 
+  position: relative;
+
   :nth-of-type(odd) {
     background-color: ${({ theme: { foreground } }) => foreground};
     color: ${({ theme: { background } }) => background};
