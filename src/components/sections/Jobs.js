@@ -74,11 +74,21 @@ const JobWrapper = styled(motion.div)`
     props.isOpen &&
     css`
       position: absolute;
-      top: 30px;
-      left: 30px;
-      right: 30px;
-      bottom: 30px;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
       z-index: 1;
+      cursor: initial;
+      @media screen and (max-width: 480px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        border-radius: 0;
+      }
     `}
   margin: 15px;
   overflow: hidden;
@@ -88,6 +98,22 @@ const monthFormat = new Intl.DateTimeFormat('en-US', {
   month: 'long',
   year: 'numeric',
 });
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const CloseButton = styled.button`
+  position: relative;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  img {
+    height: 24px;
+  }
+`;
 
 const Job = ({
   name,
@@ -102,7 +128,11 @@ const Job = ({
   layoutId,
 }) => {
   return (
-    <JobWrapper onClick={onClick} isOpen={isOpen} layoutId={layoutId}>
+    <JobWrapper
+      onClick={isOpen ? null : onClick}
+      isOpen={isOpen}
+      layoutId={layoutId}
+    >
       <motion.div
         layoutId={`${layoutId}-initial-wrapper`}
         style={{
@@ -112,7 +142,14 @@ const Job = ({
           padding: '15px',
         }}
       >
-        <motion.h2 layoutId={`${layoutId}-name`}>{name}</motion.h2>
+        <HeaderWrapper>
+          <motion.h2 layoutId={`${layoutId}-name`}>{name}</motion.h2>
+          {isOpen && (
+            <CloseButton onClick={onClick}>
+              <img src="/close.svg" alt="close" />
+            </CloseButton>
+          )}
+        </HeaderWrapper>
         <Logo src={icon} alt={name} />
         <motion.p layoutId={`${layoutId}-title`}>{title}</motion.p>
         <motion.p layoutId={`${layoutId}-range`}>
@@ -182,6 +219,7 @@ export default function Jobs() {
           )}
         </AnimatePresence>
       </AnimateSharedLayout>
+      <p>Click on a job to see more details.</p>
     </Section>
   );
 }
