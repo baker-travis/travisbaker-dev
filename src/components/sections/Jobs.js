@@ -5,17 +5,34 @@ import Section from './Section';
 
 const jobs = [
   {
+    name: 'Bestow',
+    title: 'Senior Software Engineer II',
+    startDate: '2021-07-06',
+    icon: '/bestow.svg',
+    description: (
+      <p>
+        As a senior engineer on the Bestow team, I've played an integral role in
+        starting up the design system, improving the usability of our enrollment
+        SDK, and delivering a SaaS platform to enable our enrollment platform
+        for partner life insurance agencies.
+      </p>
+    ),
+    projects: [],
+    bullets: [],
+  },
+  {
     name: 'Pumpjack Dataworks',
     title: 'Lead Software Engineer',
     startDate: '2020-01-26',
+    endDate: '2021-07-02',
     icon: '/pumpjack-logo.svg',
     description: (
       <p>
         As lead engineer at Pumpjack Dataworks I've had the pleasure to build
         and mentor a team of engineers. Since being a part of the team, I've
         implemented the Agile Scrum framework to improve how the team functions,
-        refactored our application to prepare for scale, and created a web SDK
-        for mobile analytics.
+        refactored our application and infrastructure to prepare for scale,
+        built out the design system, and created a web SDK for mobile analytics.
       </p>
     ),
     projects: [],
