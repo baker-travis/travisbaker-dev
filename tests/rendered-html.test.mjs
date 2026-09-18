@@ -29,8 +29,17 @@ test("ships portfolio metadata without starter artifacts", async () => {
   assert.doesNotMatch(page, /codex-preview|SkeletonPreview/);
   assert.doesNotMatch(layout, /Starter Project|codex-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
-  assert.doesNotMatch(packageJson, /vinext|drizzle|@cloudflare\/vite-plugin/);
+  const manifest = JSON.parse(packageJson);
+  const dependencyNames = Object.keys({
+    ...manifest.dependencies,
+    ...manifest.devDependencies,
+  }).join("\n");
+  assert.doesNotMatch(
+    dependencyNames,
+    /^(vinext|drizzle-orm|drizzle-kit|@cloudflare\/vite-plugin)$/m,
+  );
   await assert.rejects(access(previewRoot));
   await assert.rejects(access(new URL("public/_sites-preview", templateRoot)));
   await assert.rejects(access(new URL("../.openai/hosting.json", import.meta.url)));
+  await assert.rejects(access(new URL("../drizzle", import.meta.url)));
 });
