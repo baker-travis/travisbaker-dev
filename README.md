@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-The development server prints the local URL when it starts.
+Open the local URL printed by Next.js.
 
 ## Validation
 
@@ -21,8 +21,24 @@ The development server prints the local URL when it starts.
 npm test
 ```
 
-This creates the production build and verifies the rendered portfolio content
-and metadata.
+This creates the static production build in `out/` and verifies the rendered
+portfolio content, metadata, and résumé asset.
+
+## Deploy to Cloudflare
+
+The site is deployed as static assets on Cloudflare Workers. Static asset
+requests do not invoke Worker code.
+
+Authenticate once, then deploy:
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+For automatic deployments, connect the `baker-travis/travisbaker-dev`
+repository in Cloudflare Workers Builds. Cloudflare uses `wrangler.jsonc` for
+the project name and static output directory.
 
 ## Project structure
 
@@ -30,7 +46,7 @@ and metadata.
 - `app/globals.css` — light/dark visual system and responsive layout
 - `app/layout.tsx` — document shell and metadata
 - `public/travis-baker-resume.pdf` — downloadable public résumé
-- `.openai/hosting.json` — Sites deployment configuration
+- `wrangler.jsonc` — Cloudflare static-assets deployment configuration
 
-The site runs on the vinext/Cloudflare Workers-compatible starter and does not
-require a database, external runtime API, or client-side JavaScript state.
+The site uses Next.js static export and does not require a database, server-side
+runtime, or external API.
