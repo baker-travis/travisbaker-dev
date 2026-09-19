@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const projects = [
   {
@@ -152,50 +152,122 @@ function ResumeLink({ children = "Résumé", className = "" }) {
   );
 }
 
-function ThemeToggle({ theme, onChange }) {
+function ThemeIcon({ preference }) {
+  if (preference === "light") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="3.5" />
+        <path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.5 12h2M19.5 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4" />
+      </svg>
+    );
+  }
+
+  if (preference === "dark") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8a8.5 8.5 0 1 0 11.3 11.3Z" />
+      </svg>
+    );
+  }
+
   return (
-    <div className="theme-toggle" role="group" aria-label="Color theme">
-      <button
-        type="button"
-        aria-pressed={theme === "light"}
-        onClick={() => onChange("light")}
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="3" y="4" width="18" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4" />
+    </svg>
+  );
+}
+
+function ThemePicker({ preference, onChange }) {
+  const preferenceLabel =
+    preference === "light" ? "Light" : preference === "dark" ? "Dark" : "System";
+
+  return (
+    <div className="theme-picker-wrap">
+      <label
+        className="theme-picker"
+        title={`Color theme: ${preferenceLabel}`}
       >
-        Light
-      </button>
-      <button
-        type="button"
-        aria-pressed={theme === "dark"}
-        onClick={() => onChange("dark")}
-      >
-        Dark
-      </button>
+        <span className="visually-hidden">Color theme</span>
+        <ThemeIcon preference={preference} />
+        <select
+          value={preference}
+          onChange={(event) => onChange(event.target.value)}
+        >
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
     </div>
   );
 }
 
 export default function Home() {
-  const [theme, setTheme] = useState("light");
+  const [themePreference, setThemePreference] = useState("system");
   const [themeReady, setThemeReady] = useState(false);
+  const themePreferenceRef = useRef("system");
 
   useEffect(() => {
+    const root = document.documentElement;
+    const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    let savedTheme = null;
+
+    try {
+      const saved = window.localStorage.getItem("portfolio-theme");
+      savedTheme = saved === "light" || saved === "dark" ? saved : null;
+    } catch {}
+
+    const initialPreference = savedTheme || "system";
+    themePreferenceRef.current = initialPreference;
+
     const frame = window.requestAnimationFrame(() => {
-      const initialTheme =
-        document.documentElement.dataset.theme === "dark" ? "dark" : "light";
-      setTheme(initialTheme);
+      setThemePreference(initialPreference);
       setThemeReady(true);
     });
 
-    return () => window.cancelAnimationFrame(frame);
+    const followSystemTheme = (event) => {
+      if (themePreferenceRef.current !== "system") return;
+
+      const systemTheme = event.matches ? "dark" : "light";
+      root.dataset.theme = systemTheme;
+      root.style.colorScheme = systemTheme;
+    };
+
+    colorScheme.addEventListener("change", followSystemTheme);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      colorScheme.removeEventListener("change", followSystemTheme);
+    };
   }, []);
 
   const [openProject, setOpenProject] = useState(null);
 
   useEffect(() => {
     if (!themeReady) return;
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-    window.localStorage.setItem("portfolio-theme", theme);
-  }, [theme, themeReady]);
+    const resolvedTheme =
+      themePreference === "system"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : themePreference;
+    document.documentElement.dataset.theme = resolvedTheme;
+    document.documentElement.style.colorScheme = resolvedTheme;
+  }, [themePreference, themeReady]);
+
+  const selectThemePreference = (selectedPreference) => {
+    themePreferenceRef.current = selectedPreference;
+    setThemePreference(selectedPreference);
+
+    try {
+      if (selectedPreference === "system") {
+        window.localStorage.removeItem("portfolio-theme");
+      } else {
+        window.localStorage.setItem("portfolio-theme", selectedPreference);
+      }
+    } catch {}
+  };
 
   const personSchema = {
     "@context": "https://schema.org",
@@ -239,7 +311,10 @@ export default function Home() {
             </ExternalLink>
             <a href="mailto:baker.travis.w@gmail.com">Email</a>
           </nav>
-          <ThemeToggle theme={theme} onChange={setTheme} />
+          <ThemePicker
+            preference={themePreference}
+            onChange={selectThemePreference}
+          />
         </div>
       </header>
 

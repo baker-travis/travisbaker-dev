@@ -43,3 +43,20 @@ test("ships portfolio metadata without starter artifacts", async () => {
   await assert.rejects(access(new URL("../.openai/hosting.json", import.meta.url)));
   await assert.rejects(access(new URL("../drizzle", import.meta.url)));
 });
+
+test("offers a persistent and accessible system, light, or dark theme", async () => {
+  const [page, layout] = await Promise.all([
+    readFile(new URL("../app/page.jsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(layout, /prefers-color-scheme: dark/);
+  assert.match(layout, /localStorage\.getItem\("portfolio-theme"\)/);
+  assert.match(page, /<span className="visually-hidden">Color theme<\/span>/);
+  assert.match(page, /<option value="system">System<\/option>/);
+  assert.match(page, /colorScheme\.addEventListener\("change", followSystemTheme\)/);
+  assert.match(page, /themePreferenceRef\.current !== "system"/);
+  assert.match(page, /localStorage\.removeItem\("portfolio-theme"\)/);
+  assert.match(page, /localStorage\.setItem\("portfolio-theme", selectedPreference\)/);
+  assert.doesNotMatch(page, /localStorage\.setItem\("portfolio-theme", theme\)/);
+});
