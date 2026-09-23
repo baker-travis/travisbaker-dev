@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Travis Baker" }],
   creator: "Travis Baker",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+      { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+  },
   openGraph: {
     type: "website",
     title: "Travis Baker — Principal Software Engineer",
