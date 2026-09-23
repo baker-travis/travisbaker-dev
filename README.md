@@ -6,7 +6,8 @@ career progression, and selected engineering case studies.
 
 ## Local development
 
-Requires Node.js `>=22.13.0`.
+Requires Node.js `>=24.0.0`. Use Node.js 24 to match CI; `.nvmrc` selects the
+same major version for local development and both GitHub Actions jobs.
 
 ```bash
 npm install
